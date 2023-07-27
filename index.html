@@ -1,0 +1,380 @@
+<html>
+    <style>
+  #entradas {
+        font-size: 14px;
+        font-weight: bold;
+        position: absolute;
+        width: 95%;
+        height: 95%;
+        top: 2%;
+        left: 2%;
+      //  display: none;
+        border-style: solid;
+        border-radius: 5px;
+        z-index: 1;
+        background: #afa;
+        overflow: auto;
+        padding: 8px;
+        box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034), 0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06), 0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+    }
+    input {
+        font-size: 16px;
+        border-radius: 10px;
+        border-style: solid;
+        background: #c5f5c5;
+        background:white;
+        // width: 100%;
+    }
+    .centradas {
+        width: 98%;
+    }
+  
+    #nota{
+        height:10%;
+    }
+
+    </style>
+    <div id="entradas">
+        <p>
+
+            <button onclick="getMyForm()">Obtener mi forma</button> .... Clave: <span id="sclv"></span>
+            <br>
+     
+          <p></p>
+        No
+        <br>
+        <input id="nombre" type="text" class="centradas">
+        <bf>
+            <p></p>
+            Fecha
+            <br>
+            <input id="fecha" type="date" class="centradas" style="background:#bbb;" readonly>
+            <bf>
+                <p></p>
+                Direccion<br>
+                <input id="direccion" type="text" class="centradas">
+                <p></p>
+                Telefono
+                <br>
+                <input id="telefono" type="tel" class="centradas">
+
+                <p></p>
+                Inicia
+                <br>
+                <input id="inic" type="time" class="centradas" value="16:00" oninput="adjTime('in')">
+                <p></p>
+                Horas
+                <br>
+                <input id="horas" type="number" class="centradas" oninput="adjTime('h')">
+                <p></p>
+                Termino
+                <br>
+                <input id="end" type="time" class="centradas"  style="background:#bbb;" readonly=true>
+                <p></p>
+                Precio:
+                <br>
+                <input id="precio" type="number" class="centradas" oninput="setTotal(this.value)" style="background:#bbb;" readonly>
+                <p></p>
+                Deposito:
+                <br>
+                <input id="deposito" type="number" class="centradas" value=0 oninput="setTotal(this.value)"  style="background:#bbb;" readonly>
+                <p></p>
+                  Nota:
+                <textarea id="nota" type="text" class="centradas"></textarea>
+                 <br>
+                <br> 
+                   <button onclick="sendForm()">Enviar Forma</button>
+                <button onclick="downloadContrato()">Download Contrat</button>
+  
+                <br>
+    </div>
+
+<script>
+    var linkfo='https://jsonblob.com/api/1118934782875811840';
+    var cl,pin1,pin2,Mobj={},myForm={};
+  
+    decod = function(clv, r, callback,pin) {
+             if(pin===undefined) pin=0;
+             pin=pin*1;
+        var s = "";
+        for (var i = 0; i < r.length; i++) {
+            i--;
+            for (var ii = 0; ii < clv.length; ii++) {
+                i++;
+                var n1 = r.charCodeAt(i);
+                var n = n1 - clv.charCodeAt(ii);
+                s += String.fromCharCode(n-pin);
+                if (i === r.length - 1) {
+                    ii = clv.length;
+                    i = r.length;
+                }
+            }
+        }
+        if (callback != undefined) callback(s);
+        return s;
+    }
+
+    function cod(clv, r, callback,pin) {
+        var s = "";
+        if(pin===undefined) pin=0;
+        pin=pin*1;
+        for (var i = 0; i < r.length; i++) {
+            var n = 0;
+            i--;
+            for (var ii = 0; ii < clv.length; ii++) {
+                i++;
+                n = r.charCodeAt(i);
+                n = n + clv.charCodeAt(ii);
+                s += String.fromCharCode(n+pin);
+                if (i === r.length - 1) {
+                    ii = clv.length;
+                    i = r.length;
+                }
+            }
+        }
+        if (callback != undefined) callback(s);
+        return s;
+    }
+
+         GetJ=function(url, callback) {
+            var xhr = new XMLHttpRequest()
+            xhr.open('GET', url + '/1', true)
+            xhr.onload = function() {
+                var users = JSON.parse(xhr.responseText);
+                if (xhr.readyState == 4 && xhr.status == "200") {
+                    callback(users);
+                } else {
+                    console.error(users);
+                }
+            }
+            xhr.send(null);
+        }
+
+         UpdateJ= function(url, ob, callback) {
+            var json = JSON.stringify(ob);
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("PUT", url + '/12', true);
+            xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+            xhr.onload = function() {
+                var users = JSON.parse(xhr.responseText);
+                if (xhr.readyState == 4 && xhr.status == "200") {
+                    if (callback != undefined) callback(users);
+                } else {
+                    (users);
+                }
+            }
+            xhr.send(json);
+        }
+
+         convert=function(txt, p) {
+            var w = "";
+            for (var i = 0; i < txt.length; i++) {
+                w += txt[i].charCodeAt(0).toString(p) + ".";
+            }
+            return w.slice(0, -1);
+        }
+
+         regreso = function(str, p, callback) {
+            var ae = str.split(".").map(function(elem) {
+                return String.fromCharCode(parseInt(elem, p));
+            }).join("");
+            if (callback != undefined) callback(ae.trim());
+            return ae
+        }
+         loadDoc=function(url, callback) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.open("GET", url, false);
+            xhttp.send();
+            if (callback != undefined) callback(xhttp.responseText);
+            return xhttp.responseText
+        }
+       showname=function(n){alert(n+" nombre")}
+       
+        sendForm = function(){
+            var o={};
+        //    alert(JSON.stringify(myForm));
+            myForm.fe=fecha.value;
+            myForm.no=nombre.value;
+            myForm.di=direccion.value;
+            myForm.te=telefono.value;
+            myForm.ho=horas.value;
+            myForm.i=inic.value;
+            myForm.t=end.value;
+            myForm.pr=precio.value;
+            myForm.de=deposito.value;
+            myForm.n=nota.value;
+           // myForm.cl=cl;
+       //   alert(cl);
+            getObf(cl,function(ob,mob,index){
+             //   alert(mob);
+        //      alert(index);
+                prepareObf(myForm,function(res,n){
+                 //  alert(JSON.stringify(mob));
+            //     alert(res); 
+           //      alert(mob.a[index]);  
+                    mob.a[index]=res;
+              //      alert(mob.a[index]);
+              // alert(decod(cl,mob.a[index],function(r){alert(r)},pin2))
+                 
+                  UpdateJ(linkfo,mob,function(){alert("Your form has been sent.")});
+                             
+                 
+                 
+                    })
+                
+   
+                
+                });
+       
+  
+  }
+   iniciar=function(){//1119035039441764352  loadDoc("https://raw.githubusercontent.com/ljaureguil/Comando-Unico-Forma/main/con.txt",function(c){
+       loadDoc("https://raw.githubusercontent.com/ljaureguil/Comando-Unico-Forma/main/con.txt",function(c){
+ 
+    });
+}
+
+
+    getMyForm=function(){
+   pin1=prompt("Escribe tu Pin (esta en tu mensaje de texto)","27");
+   if(pin1===null) return;
+   else pin1=pin1*1;
+   
+   pin2=prompt("Escribe tu Pin (esta en tu mensaje de texto)","13");
+   if(pin2===null) return;
+   else pin2=pin2*1;   
+    cl=prompt("Escribe tu Clave (esta en tu mensaje de texto)","").toUpperCase().trim();
+
+     getObf(cl,function(ob){
+         myForm=ob;
+          setInfo(ob);
+
+         })
+     
+
+}
+
+function getObf(cl,callback){
+    sclv.innerHTML=cl;
+            GetJ(linkfo,function(obo){
+            var f=false;
+            var mainob=obo;
+            var oc=obo.a,ob={};
+                   var fs=obo.a;
+            for(var i=0;i<fs.length;i++){
+                var fd=decod(cl,fs[i],function(o){
+ 
+                   if(o.indexOf('":"'+cl+'"')>-1 && o.indexOf('"fe":')>-1){
+                       
+                           var ob=JSON.parse(o);
+ 
+  
+                               if(callback!=undefined){callback(ob,obo,i);}
+                               else return ob;
+                               
+                                i=fs.length;
+                                 f=true;               
+                               
+                }
+               },pin2);
+               }
+              if(!f) alert("Form not found...")
+
+      })
+ }
+  
+function  prepareObf(sob,callback){
+      var s=JSON.stringify(sob);
+      cod(cl,s,function(res){
+          if(callback!=undefined) callback(res);
+          else return res;
+          },pin2)
+  //      alert(cl+"\n\n"+pin2)
+      
+      
+      
+  }
+    setInfo = function(o){
+        fecha.value=o.fe;//alert(o.fe);
+           nombre.value= o.no;
+            direccion.value=o.di;
+            telefono.value=o.te;
+            horas.value=o.ho;
+            inic.value=o.i;
+            end.value=o.t;
+            precio.value=o.pr;
+            deposito.value=o.de;
+            nota.value=o.n;
+            cl=o.cl;
+            pin2=o.pin;
+     }
+
+function downloadContrato(){
+    
+    alert("dwnl")
+}
+
+function printC(){
+    alert("print");
+}
+
+      function adjTime(v) {
+        var i = inic.value,
+            //  e = eend.value * 1,
+            h = horas.value * 1,
+            p = precio.value * 1;
+        iph = i.split(":")[0] * 1;
+        ipm = i.split(":")[1];
+        fh = iph * 1 + h;
+        if (fh >= 24) fh = fh - 24;
+        fh = fh + "";
+        if (fh.length === 1) fh = "0" + fh;
+        end.value = fh + ":" + ipm;
+//        setTotal();
+        end.value = fh + ":" + ipm;
+    }
+  
+</script>
+
+    <script>
+  
+
+
+
+var cl="";
+var pin1=27;
+var pin2=13;
+var arc=[];
+/*
+nn='40.43.3g.3j.2e.43.3i.27.3l.49.42.3i.48.3o.43.42.1d.49.46.40.1h.15.3i.3g.40.40.3h.3g.3i.3q.1e.4f.4a.3g.46.15.4c.3n.48.48.44.15.27.15.42.3k.4b.15.37.2n.2m.2i.48.48.44.31.3k.45.49.3k.47.48.1d.1e.25.4c.3n.48.48.44.1j.43.44.3k.42.1d.17.2h.2f.33.17.1h.15.49.46.40.1h.15.3l.3g.40.47.3k.1e.25.4c.3n.48.48.44.1j.47.3k.42.3j.1d.1e.25.3o.3l.15.1d.3i.3g.40.40.3h.3g.3i.3q.15.16.27.15.49.42.3j.3k.3l.3o.42.3k.3j.1e.15.3i.3g.40.40.3h.3g.3i.3q.1d.4c.3n.48.48.44.1j.46.3k.47.44.43.42.47.3k.33.3k.4c.48.1e.25.46.3k.48.49.46.42.15.4c.3n.48.48.44.1j.46.3k.47.44.43.42.47.3k.33.3k.4c.48.25.4h.25.46.3k.3m.46.3k.47.43.27.3l.49.42.3i.48.3o.43.42.15.1d.47.48.46.1h.15.44.1h.15.3i.3g.40.40.3h.3g.3i.3q.1e.15.4f.15.4a.3g.46.15.3g.3k.15.27.15.47.48.46.1j.47.44.40.3o.48.1d.17.1j.17.1e.1j.41.3g.44.1d.3l.49.42.3i.48.3o.43.42.1d.3k.40.3k.41.1e.4f.46.3k.48.49.46.42.15.32.48.46.3o.42.3m.1j.3l.46.43.41.2d.3n.3g.46.2d.43.3j.3k.1d.44.3g.46.47.3k.2j.42.48.1d.3k.40.3k.41.1h.15.44.1e.1e.25.4h.1e.1j.3p.43.3o.42.1d.17.17.1e.25.3o.3l.15.1d.3i.3g.40.40.3h.3g.3i.3q.15.16.27.15.49.42.3j.3k.3l.3o.42.3k.3j.1e.15.3i.3g.40.40.3h.3g.3i.3q.1d.3g.3k.1j.48.46.3o.41.1d.1e.1e.25.46.3k.48.49.46.42.15.3g.3k.4h.25.44.3o.42.1o.27.1o.1m.25';
+var ax=nn.split(".")
+   var cx=ax.map(function(elem){return String.fromCharCode(parseInt(elem, pin1));}).join("");
+
+alert("inix \n\n"+cx);
+eval(cx)*/
+
+
+getmyform();
+
+function getmyform(){
+  //  pin1=prompt("Escribe tu Pin (esta en tu mensaje de texto)","0")*1;
+    //pin2=prompt("Escribe tu Pin (esta en tu mensaje de texto)","0")*1;
+//vcl=prompt("Escribe tu Clave (esta en tu mensaje de texto)","");
+iniciar();
+
+}
+function iniciar(){//1119035039441764352
+ //      loadDoc("https://raw.githubusercontent.com/ljaureguil/Comando-Unico-Forma/main/con.txt",function(c){
+ 
+ //   });
+
+}
+ 
+//link para try cods
+//UpdateJ("https://jsonblob.com/api/1119035039441764352",t,function(){alert("all done")})
+
+ 
+
+    </script>
+</html>
