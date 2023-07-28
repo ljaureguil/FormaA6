@@ -1,4 +1,8 @@
 <html>
+   <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1484/1484799.png">
+   <title>Forma</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <style>
   #entradas {
         font-size: 14px;
@@ -78,20 +82,22 @@
                 Deposito:
                 <br>
                 <input id="deposito" type="number" class="centradas" value=0 oninput="setTotal(this.value)"  style="background:#bbb;" readonly>
-                <p></p>
-                  Nota:
+                <p id="tot">Total:</p>
+                     Nota:
                 <textarea id="nota" type="text" class="centradas"></textarea>
                  <br>
                 <br> 
                    <button onclick="sendForm()">Enviar Forma</button>
                 <button onclick="downloadContrato()">Download Contrat</button>
-  
+                 <button onclick="printF(true)">Print Contrat</button>
+                 <button onclick="printF(false)">Print Blank Contrat</button>                
                 <br>
     </div>
 
 <script>
     var linkfo='https://jsonblob.com/api/1118934782875811840';
-    var cl,pin1,pin2,Mobj={},myForm={};
+    var cl,pin1,pin2,Mobj={},myForm={},ctotal,cresto;
+    deposito.value=0;
   
     decod = function(clv, r, callback,pin) {
              if(pin===undefined) pin=0;
@@ -244,7 +250,9 @@
    pin2=prompt("Escribe tu Pin (esta en tu mensaje de texto)","13");
    if(pin2===null) return;
    else pin2=pin2*1;   
-    cl=prompt("Escribe tu Clave (esta en tu mensaje de texto)","").toUpperCase().trim();
+    cl=prompt("Escribe tu Clave (esta en tu mensaje de texto)","");
+    if(cl!=null)cl=cl.toUpperCase().trim();
+    else {alert("incorrect password");}
 
      getObf(cl,function(ob){
          myForm=ob;
@@ -331,8 +339,108 @@ function printC(){
         fh = fh + "";
         if (fh.length === 1) fh = "0" + fh;
         end.value = fh + ":" + ipm;
-//        setTotal();
+        setTotal();
         end.value = fh + ":" + ipm;
+    }
+    function setTotal(v){
+     ctotal=precio.value*horas.value;
+     cresto=(precio.value*horas.value-deposito.value);
+
+     tot.innerHTML='Total: '+ctotal+'<br>Dep. '+deposito.value+'<br>Res '+cresto;
+    
+    }
+ 
+    function printF(blank){
+        myForm.fe=fecha.value;
+            myForm.no=nombre.value;
+            myForm.di=direccion.value;
+            myForm.te=telefono.value;
+            myForm.ho=horas.value;
+            myForm.i=inic.value;
+            myForm.t=end.value;
+            myForm.pr=precio.value;
+            myForm.de=deposito.value;
+            myForm.n=nota.value;
+    var forma=myForm;
+   //     var texta=document.createElement("textarea");
+        
+        var datos=`
+Nombre: ___________________________________
+Fecha del Evento: _________________________
+Precio por Hora____________________________
+Horas: ____________________________________
+Hora de Inicio: ___________________________
+Hora de Término: __________________________
+Domicilio del evento: _____________________
+Numero tel/cell: __________________________
+Deposito: _________________________________
+Restando: _________________________________
+
+        `;
+       if(blank){ datos=
+'Nombre: '+forma.no+"\n"+
+'Fecha del Evento:'+forma.fe+"\n"+
+'Precio por Hora: '+forma.pr+"\n"+
+'Horas: '+forma.ho+"\n"+
+'Hora de Inicio: '+forma.i+"\n"+
+'Hora de Término: '+forma.t+"\n"+
+'Domicilio del evento: '+forma.di+"\n"+
+'Numero tel/cell: '+forma.te+"\n"+
+'Deposito: '+forma.de+"\n"+
+'Total: '+ctotal+"\n"+
+'Restando: '+cresto+"\n"
+       }
+    
+
+        var contrato=`
+Contrato del Grupo Comando Único.
+
+A quien corresponda:
+Por medio de este presente hago constar que el Grupo Comando Único amenizara en el evento de:\n\n`
++ datos
++`
+
+La persona se compromete a pagar la cantidad restante el día de la ceremonia que se celebrará. una vez terminada la primera hora, se deberá liquidar la cantidad restante, a base de dinero en efectivo; no se aceptarán cheques. Si en el dia del evento se pide mas tiempo despues de las marcadas en el contrato se cobraran al precio actual que el grupo tenga.
+En dado caso que el evento sea suspendido por riña o por paro de las leyes locales la cantidad restante se tiene que liquidar.
+
+Si por alguna razón entre la hora de inicio y término hubiera alguna interrupción por parte del cliente o debido a la programación del evento el grupo no sera responsable, el compromiso terminará a la hora acordada.
+
+se deberá tener un espacio predeterminado para la instalación del Grupo, ya sea en stage o lugar del evento. En dado caso de alguna otra instalación de sonido, ya sea Dj u otro tipo de agrupación, se pide de favor; dejar un espacio para el grupo.
+
+Además de que se tendrá que reservar un debido espacio en estacionamiento o entrada, para descargar el equipo, y cargar dicho equipo cuando el evento haya concluido; preferiblemente lo más cercano posible al escenario.
+
+En dado caso de un clima imprevisto, ya sea lluvia, granizo, etc. El evento tendrá que llevarse a cabo, en caso de cancelación de dicho evento, el cliente perderá su depósito por motivo de incumplimiento.
+
+Debe tomarse en cuenta que si por alguna razón la energía eléctrica no es suficiente o llegara a haber un corto o fallas; el evento tendría que llevarse a cabo aun sin energía. se tendrá que notificar al responsable del grupo con un mínimo de 15 días antes. El lugar del evento debe disponer con la suficiente energía para la conexión de aparatos auditivos, como bocinas, micrófonos, etc.
+
+Grupo Comando Único se compromete con todos sus clientes a ofrecer el mejor servicio que se merece, para que pase un momento agradable en su celebración.
+
+Firma del cliente: 
+_______________________     Fecha:_____________
+
+
+Firma del Representante de Comando Unico
+
+_______________________     Fecha:_____________
+
+
+`;
+printText(contrato);
+    }
+    
+    function printText(text){
+        
+     
+             childWindow = window.open('','childWindow','location=yes, menubar=yes, toolbar=yes');
+          childWindow.document.open();
+          childWindow.document.write('<html><head><textarea style="width:100%;height:100%;border:none;padding:10px;">'+text+'</textarea></head><body>');
+
+          childWindow.document.write('</body></html>');
+          childWindow.print();
+          childWindow.document.close();
+          childWindow.close();
+   
+            
     }
   
 </script>
