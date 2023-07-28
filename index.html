@@ -4,6 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <style>
+        button{
+            margin:15px;
+            color:white;
+            background: #f00;
+
+        }
   #entradas {
         font-size: 14px;
         font-weight: bold;
@@ -210,6 +216,7 @@
             myForm.pr=precio.value;
             myForm.de=deposito.value;
             myForm.n=nota.value;
+              myForm.st="returned";         
            // myForm.cl=cl;
        //   alert(cl);
             getObf(cl,function(ob,mob,index){
@@ -294,6 +301,7 @@ function getObf(cl,callback){
   
 function  prepareObf(sob,callback){
       var s=JSON.stringify(sob);
+      alert(s)
       cod(cl,s,function(res){
           if(callback!=undefined) callback(res);
           else return res;
