@@ -482,6 +482,7 @@ printText(contrato);
  // $('button.print').click(function(e) {
  //   e.preventDefault();
     if (isAndroid) {
+       alert("Android");
       // https://developers.google.com/cloud-print/docs/gadget
       var gadget = new cloudprint.Gadget();
       gadget.setPrintDocument("url", $('title').html(), window.location.href, "utf-8");
