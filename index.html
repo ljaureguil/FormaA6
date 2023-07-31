@@ -477,12 +477,13 @@ printText(contrato);
         
   
   var ua = navigator.userAgent.toLowerCase();
+             alert(ua);
   var isAndroid = ua.indexOf("android") > -1; //&& ua.indexOf("mobile");
-
+ alert("Android"+isAndroid);
  // $('button.print').click(function(e) {
  //   e.preventDefault();
     if (isAndroid) {
-       alert("Android");
+      
       // https://developers.google.com/cloud-print/docs/gadget
       var gadget = new cloudprint.Gadget();
       gadget.setPrintDocument("url", $('title').html(), window.location.href, "utf-8");
