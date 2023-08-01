@@ -481,15 +481,15 @@ printText(contrato);
     try{
   var ua = navigator.userAgent.toLowerCase();
              alert(ua);
-  var isAndroid = ua.indexOf("android") > -1; //&& ua.indexOf("mobile");
- //alert("Android ...  "+isAndroid);
- 
-    if (isAndroid) {
+             
+//  var isAndroid = ua.indexOf("android") > -1; //&& ua.indexOf("mobile");
+  
+    if (ua.indexOf("android") || ua.indexOf("mobil")) {
   
       // https://developers.google.com/cloud-print/docs/gadget
-      var gadget = new cloudprint.Gadget();
-      gadget.setPrintDocument("url", $('title').html(), window.location.href, "utf-8");
-      gadget.openPrintDialog();
+ //     var gadget = new cloudprint.Gadget();
+  //    gadget.setPrintDocument("url", $('title').html(), window.location.href, "utf-8");
+  //    gadget.openPrintDialog();
     
 
     }
