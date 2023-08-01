@@ -98,6 +98,7 @@
                  <button onclick="printF(true)">Print Contrat</button>
                  <button onclick="printF(false)">Print Blank Contrat</button>                
                 <br>
+ 
     </div>
  
 <script>
@@ -467,7 +468,7 @@ printText(contrato);
     }
     
     function printText(text){
-        alert("Si usas android una vez avierta la ventana ve al menu despues a Share y busca 'print' o logo de impresora")
+        alert("**SI NO APARECE LA VENTANA DE IMPRESION:\n\n*Ve al menu y busca el logo de impresora o 'print'\n\n*Para android ve a share y busca el logo de impresion")
 
              childWindow = window.open('','childWindow','location=yes, menubar=yes, toolbar=yes');
           childWindow.document.open();
@@ -480,16 +481,9 @@ printText(contrato);
         
     try{
   var ua = navigator.userAgent.toLowerCase();
-             alert(ua);
-             
-//  var isAndroid = ua.indexOf("android") > -1; //&& ua.indexOf("mobile");
-  
+          alert(ua);
+   
     if (ua.indexOf("android") || ua.indexOf("mobil")) {
-  
-      // https://developers.google.com/cloud-print/docs/gadget
- //     var gadget = new cloudprint.Gadget();
-  //    gadget.setPrintDocument("url", $('title').html(), window.location.href, "utf-8");
-  //    gadget.openPrintDialog();
     
 
     }
@@ -562,4 +556,7 @@ function iniciar(){//1119035039441764352
  
 
     </script>
+
+
+
 </html>
