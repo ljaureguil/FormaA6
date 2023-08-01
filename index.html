@@ -462,49 +462,46 @@ _______________________     Fecha:_____________
 
 
 `;  
+contrato=contrato.replace(/undefined/g,"")
 printText(contrato);
     }
     
     function printText(text){
-    
+        alert("Si usas android una vez avierta la ventana ve al menu despues a Share y busca 'print' o logo de impresora")
 
              childWindow = window.open('','childWindow','location=yes, menubar=yes, toolbar=yes');
           childWindow.document.open();
           childWindow.document.write('<html><head><title></title><textarea style="width:100%;height:100%;border:none;padding:10px;">'+text+'</textarea></head><body>');
 
           childWindow.document.write('</body></html>');
+
+
           setTimeout(function(){
         
-  
+    try{
   var ua = navigator.userAgent.toLowerCase();
              alert(ua);
   var isAndroid = ua.indexOf("android") > -1; //&& ua.indexOf("mobile");
- alert("Android ...  "+isAndroid);
- // $('button.print').click(function(e) {
- //   e.preventDefault();
+ //alert("Android ...  "+isAndroid);
+ 
     if (isAndroid) {
-      try{
+  
       // https://developers.google.com/cloud-print/docs/gadget
       var gadget = new cloudprint.Gadget();
       gadget.setPrintDocument("url", $('title').html(), window.location.href, "utf-8");
       gadget.openPrintDialog();
     
-} 
-catch(e){alert(e)}  
-    } else {
-  //      childwindow.print();
+
+    }
+     else {
  
- //   return false;
- // });
-
-
-
-
-
           childWindow.print();
           childWindow.document.close();
           childWindow.close();
-      }},1000)
+      }
+    } 
+catch(e){alert(e)}  
+    },1000)
             
     }
      function printText2(text){
