@@ -479,15 +479,18 @@ printText(contrato);
   var ua = navigator.userAgent.toLowerCase();
              alert(ua);
   var isAndroid = ua.indexOf("android") > -1; //&& ua.indexOf("mobile");
- alert("Android"+isAndroid);
+ alert("Android ...  "+isAndroid);
  // $('button.print').click(function(e) {
  //   e.preventDefault();
     if (isAndroid) {
-      
+      try{
       // https://developers.google.com/cloud-print/docs/gadget
       var gadget = new cloudprint.Gadget();
       gadget.setPrintDocument("url", $('title').html(), window.location.href, "utf-8");
       gadget.openPrintDialog();
+    
+} 
+catch(e){alert(e)}  
     } else {
   //      childwindow.print();
  
