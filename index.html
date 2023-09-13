@@ -326,6 +326,7 @@ function  prepareObf(sob,callback){
             nota.value=o.n;
             cl=o.cl;
             pin2=o.pin;
+            setTotal()
      }
 
 function downloadContrato(){
@@ -411,7 +412,11 @@ Deposito: _________________________________
 Restando: _________________________________
 
         `;
-       if(blank){ datos=
+       if(blank){
+      ctotal=precio.value*horas.value;
+     cresto=(precio.value*horas.value-deposito.value);
+      
+       datos=
 'Nombre: '+forma.no+"\n"+
 'Fecha del Evento:'+forma.fe+"\n"+
 'Precio por Hora: '+forma.pr+"\n"+
