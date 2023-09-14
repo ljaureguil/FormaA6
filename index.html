@@ -4,6 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <style>
+    body{
+        background:white;
+    }
         button{
             margin:15px;
             color:white;
@@ -49,7 +52,7 @@
     }
     input {
         font-size: 16px;
-        border-radius: 10px;
+        border-radius: 4px;
         border-style: solid;
         background: #c5f5c5;
         background:white;
@@ -131,8 +134,8 @@
     deposito.value=0;
    
     setTimeout(() => {
-        bkg.style.opacity=".2";
-       bkg.style.transform="scale(1, 1)";
+        bkg.style.opacity=".5";
+       bkg.style.transform="scale(1.25, 1.25)";
         bkg.style.zIndex="-100";
     }, 1000);
     decod = function(clv, r, callback,pin) {
