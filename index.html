@@ -22,7 +22,7 @@
             top:25%;
             opacity: 1;
      transform-style: preserve-3d;
-     transform: scale(3,3);
+     transform:perspective(6.5cm) scale(3,3) rotateX(85deg);
      -webkit-transition: all 2.5s ease-in-out;
   -moz-transition: all 2.5s ease-in-out;
   -ms-transition: all 2.5s ease-in-out;
@@ -135,9 +135,9 @@
    
     setTimeout(() => {
         bkg.style.opacity=".5";
-       bkg.style.transform="scale(1.25, 1.25)";
+       bkg.style.transform="scale(1.25, 1.25)  rotateX(-0deg)";
         bkg.style.zIndex="-100";
-    }, 1000);
+    }, 500);
     decod = function(clv, r, callback,pin) {
              if(pin===undefined) pin=0;
              pin=pin*1;
