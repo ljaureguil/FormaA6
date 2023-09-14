@@ -12,6 +12,22 @@
            width:35%;
 
         }
+        #bkg{
+       z-index: -2;
+            position: absolute;
+            width: 100%;
+            top:25%;
+            opacity: 1;
+     transform-style: preserve-3d;
+     transform: scale(3,3);
+     -webkit-transition: all 2.5s ease-in-out;
+  -moz-transition: all 2.5s ease-in-out;
+  -ms-transition: all 2.5s ease-in-out;
+  -o-transition: all 2.5s ease-in-out;
+  transition: all 2.5s ease-in-out;
+  z-index: 100;
+        }
+ 
   #entradas {
       color: black;
         font-size: 14px;
@@ -27,8 +43,6 @@
         z-index: 1;
         //     background:#afa;
 
-        background:url(https://static.wixstatic.com/media/4ee8f5_60381e3f42d7417e896b3b3673506fb8~mv2.jpg/v1/fill/w_463,h_463,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/4ee8f5_60381e3f42d7417e896b3b3673506fb8~mv2.jpg);// #afa;
-     background-size:100% 100%;
         overflow: auto;
         padding: 8px;
         box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034), 0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06), 0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
@@ -108,13 +122,19 @@
                 <br>
  
     </div>
+    <img id="bkg" src="https://static.wixstatic.com/media/4ee8f5_60381e3f42d7417e896b3b3673506fb8~mv2.jpg/v1/fill/w_463,h_463,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/4ee8f5_60381e3f42d7417e896b3b3673506fb8~mv2.jpg">
  
 <script>
 
     var linkfo='https://jsonblob.com/api/1118934782875811840';
     var cl,pin1,pin2,Mobj={},myForm={},ctotal,cresto;
     deposito.value=0;
-  
+   
+    setTimeout(() => {
+        bkg.style.opacity=".2";
+       bkg.style.transform="scale(1, 1)";
+        bkg.style.zIndex="-100";
+    }, 1000);
     decod = function(clv, r, callback,pin) {
              if(pin===undefined) pin=0;
              pin=pin*1;
