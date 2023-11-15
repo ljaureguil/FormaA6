@@ -6,7 +6,6 @@
     <style>
     body{
         background:white;
-          transform-style: preserve-3d; 
     }
         button{
             margin:15px;
@@ -23,7 +22,7 @@
             top:25%;
             opacity: 1;
      transform-style: preserve-3d;
-     transform:perspective(6.5cm) scale(3,3);
+     transform:perspective(6.5cm) scale(3,3) rotateX(85deg);
      -webkit-transition: all 2.5s ease-in-out;
   -moz-transition: all 2.5s ease-in-out;
   -ms-transition: all 2.5s ease-in-out;
@@ -70,6 +69,7 @@
     </style>
     <div id="entradas">
                   <span style="position:absolute;"> Por cualquier duda llame al 209 6658321.</span>
+                  <button onclick="copyinfo()">Copiar informacion</button>
         <p>
 
             <button onclick="getMyForm()">Obtener mi forma</button> .... Clave: <span id="sclv"></span>
@@ -77,12 +77,12 @@
             <br>
      
           <p></p>
-        No
+        Nombre:
         <br>
         <input id="nombre" type="text" class="centradas">
         <bf>
             <p></p>
-            Fecha
+            Fecha:
             <br>
             <input id="fecha" type="date" class="centradas" style="background:#bbb;" readonly>
             <bf>
@@ -90,20 +90,20 @@
                 Direccion<br>
                 <input id="direccion" type="text" class="centradas">
                 <p></p>
-                Telefono
+                Telefono:
                 <br>
                 <input id="telefono" type="tel" class="centradas">
 
                 <p></p>
-                Inicia
+                Inicia:
                 <br>
                 <input id="inic" type="time" class="centradas" value="16:00" oninput="adjTime('in')">
                 <p></p>
-                Horas
+                Horas:
                 <br>
                 <input id="horas" type="number" class="centradas" oninput="adjTime('h')">
                 <p></p>
-                Termino
+                Termino:
                 <br>
                 <input id="end" type="time" class="centradas"  style="background:rgba(155,205,155,.85);" readonly=true>
                 <p></p>
@@ -136,7 +136,7 @@
    
     setTimeout(() => {
         bkg.style.opacity=".5";
-       bkg.style.transform="scale(1.25, 1.25)";
+       bkg.style.transform="scale(1.25, 1.25)  rotateX(-0deg)";
         bkg.style.zIndex="-100";
     }, 500);
     decod = function(clv, r, callback,pin) {
@@ -548,6 +548,48 @@ catch(e){alert(e)}
    },1500)
             
     } 
+    function copyinfo(){
+        myForm.fe=fecha.value;
+            myForm.no=nombre.value;
+            myForm.di=direccion.value;
+            myForm.te=telefono.value;
+            myForm.ho=horas.value;
+            myForm.i=inic.value;
+            myForm.t=end.value;
+            myForm.pr=precio.value;
+            myForm.de=deposito.value;
+            myForm.n=nota.value;
+    var forma=myForm;
+
+    ctotal=precio.value*horas.value;
+     cresto=(precio.value*horas.value-deposito.value);
+      
+       datos=
+'Nombre: '+forma.no+"\n"+
+'Fecha del Evento:'+forma.fe+"\n"+
+'Precio por Hora: '+forma.pr+"\n"+
+'Horas: '+forma.ho+"\n"+
+'Hora de Inicio: '+forma.i+"\n"+
+'Hora de Término: '+forma.t+"\n"+
+'Domicilio del evento: '+forma.di+"\n"+
+'Numero tel/cell: '+forma.te+"\n"+
+'Deposito: '+forma.de+"\n"+
+'Total: '+ctotal+"\n"+
+'Restando: '+cresto+"\n"
+
+
+ //    var s=JSON.stringify(myForm).replace(/"/g, "").replace(/{/g, "\n\n").replace(/,/g, "\n")
+        alert(datos);
+    //    let t = text.select();
+        navigator.clipboard.writeText(datos)
+   //     navigator.clipboard.writeText(text.select())
+/*
+        editor.select();
+            document.execCommand('copy');
+            editor.blur();
+            editor.style.display = 'none';
+*/
+    }
 </script>
 
     <script>
