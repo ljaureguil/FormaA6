@@ -28,7 +28,7 @@
   -ms-transition: all 2.5s ease-in-out;
   -o-transition: all 2.5s ease-in-out;
   transition: all 2.5s ease-in-out;
-  z-index: 100;
+  z-index: 5;
         }
  
   #entradas {
@@ -118,15 +118,22 @@
                 <textarea id="nota" type="text" class="centradas"></textarea>
                  <br>
                 <br> 
-                   <button onclick="sendForm()">Enviar Forma/<br>Copiar Info.</button>
+                   <button onclick="sendForm()">Enviar<br>Forma</button>
                 <button onclick="downloadContrato()">Download<br>Contrato/img</button>
                  <button onclick="printF(true)">Imprimir/Pdf<br>Contrato</button>
-                 <button onclick="printF(false)">Imprimir Contrato<br>en Blanco</button>                
+                 <button onclick="printF(false)">Imprimir Contrato<br>en Blanco</button>    
+                 <button onclick="sendForm(false)" style="width:auto;font-size:small;position:absolute;bottom:2%;right:2%;border-radius: 100px;">Copy</button>                            
                 <br>
  
     </div>
     <img id="bkg" src="https://static.wixstatic.com/media/4ee8f5_60381e3f42d7417e896b3b3673506fb8~mv2.jpg/v1/fill/w_463,h_463,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/4ee8f5_60381e3f42d7417e896b3b3673506fb8~mv2.jpg">
- 
+<div id="deditor" style="position: absolute;top:10%;left: 10%;width: 80%;height: 60%;display: none;z-index: 10;overflow: auto;border-style: solid;">
+    <textarea id="editor" style="width: 100%;height: 70%;background-color: cornsilk;"></textarea>
+    <button onclick="deditor.style.display='none';">Close</button>
+
+</div>
+
+
 <script>
 
     var linkfo='https://jsonblob.com/api/1118934782875811840';
@@ -236,7 +243,8 @@
         }
        showname=function(n){alert(n+" nombre")}
        
-        sendForm = function(){
+        sendForm = function(cop){
+        try{
             var o={};
         //    alert(JSON.stringify(myForm));
             myForm.fe=fecha.value;
@@ -252,13 +260,13 @@
               myForm.st="returned";         
   
             getObf(cl,function(ob,mob,index){
-                alert("La informacion sera copiada en tu 'Clip Board', En caso de que la forma no halla sido enviada nada mas 'paste' en un mensage de texto al 209 6658321. ")
+                if(cop===undefined)   alert("La informacion sera copiada en tu 'Clip Board', En caso de que la forma no halla sido enviada nada mas 'paste' en un mensage de texto al 209 6658321. ")
                copyinfo();
                 prepareObf(myForm,function(res,n){
      
                     mob.a[index]=res;
   
-                  UpdateJ(linkfo,mob,function(){alert("Your form has been sent.")});
+               if(cop===undefined) UpdateJ(linkfo,mob,function(){alert("Your form has been sent.")});
                              
                  
                  
@@ -267,8 +275,8 @@
    
                 
                 });
-       
-  
+            }
+  catch(e){alert(e)}
   }
    iniciar=function(){//1119035039441764352  loadDoc("https://raw.githubusercontent.com/ljaureguil/Comando-Unico-Forma/main/con.txt",function(c){
        loadDoc("https://raw.githubusercontent.com/ljaureguil/Comando-Unico-Forma/main/con.txt",function(c){
@@ -543,6 +551,7 @@ catch(e){alert(e)}
             
     } 
     function copyinfo(){
+        try{
         myForm.fe=fecha.value;
             myForm.no=nombre.value;
             myForm.di=direccion.value;
@@ -571,14 +580,13 @@ catch(e){alert(e)}
 //'Total: '+ctotal+"\n"+
 //'Restando: '+cresto+"\n"
 
-var bk=nota.value;
-nota.value=datos;
-nota.select();
+deditor.style.display="block";
+editor.value=datos;
+editor.select();
   document.execCommand('copy');
-    alert("Informacion copiada en 'Clip Board'\n\n"+datos);
-        nota.value=bk;  
-    
-        nota.blur();
+    alert("Informacion copiada en 'Clip Board', just past it in a text message to 209 6658321, Thanks.\n\n"+datos);
+         }
+        catch(e){alert(e)}
     }
 </script>
 
