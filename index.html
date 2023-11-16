@@ -69,8 +69,7 @@
     </style>
     <div id="entradas">
                   <span style="position:absolute;"> Por cualquier duda llame al 209 6658321.</span>
-                  <button onclick="copyinfo()">Copiar informacion</button>
-        <p>
+          <p>
 
             <button onclick="getMyForm()">Obtener mi forma</button> .... Clave: <span id="sclv"></span>
  
@@ -119,7 +118,7 @@
                 <textarea id="nota" type="text" class="centradas"></textarea>
                  <br>
                 <br> 
-                   <button onclick="sendForm()">Enviar<br>Forma</button>
+                   <button onclick="sendForm()">Enviar Forma/<br>Copiar a Clipboard</button>
                 <button onclick="downloadContrato()">Download<br>Contrato/img</button>
                  <button onclick="printF(true)">Imprimir/Pdf<br>Contrato</button>
                  <button onclick="printF(false)">Imprimir Contrato<br>en Blanco</button>                
@@ -251,19 +250,14 @@
             myForm.de=deposito.value;
             myForm.n=nota.value;
               myForm.st="returned";         
-           // myForm.cl=cl;
-       //   alert(cl);
+  
             getObf(cl,function(ob,mob,index){
-             //   alert(mob);
-        //      alert(index);
+                alert("La informacion sera copiada en tu 'Clip Board', En caso de que la forma no halla sido enviada nada mas 'paste' en un mensage de texto al 209 6658321. ")
+               copyinfo();
                 prepareObf(myForm,function(res,n){
-                 //  alert(JSON.stringify(mob));
-            //     alert(res); 
-           //      alert(mob.a[index]);  
+     
                     mob.a[index]=res;
-              //      alert(mob.a[index]);
-              // alert(decod(cl,mob.a[index],function(r){alert(r)},pin2))
-                 
+  
                   UpdateJ(linkfo,mob,function(){alert("Your form has been sent.")});
                              
                  
@@ -335,7 +329,7 @@ function getObf(cl,callback){
   
 function  prepareObf(sob,callback){
       var s=JSON.stringify(sob);
-      alert(s)
+  //    alert(s)
       cod(cl,s,function(res){
           if(callback!=undefined) callback(res);
           else return res;
@@ -573,22 +567,18 @@ catch(e){alert(e)}
 'Hora de Término: '+forma.t+"\n"+
 'Domicilio del evento: '+forma.di+"\n"+
 'Numero tel/cell: '+forma.te+"\n"+
-'Deposito: '+forma.de+"\n"+
-'Total: '+ctotal+"\n"+
-'Restando: '+cresto+"\n"
+'Deposito: '+forma.de+"\n";
+//'Total: '+ctotal+"\n"+
+//'Restando: '+cresto+"\n"
 
-
- //    var s=JSON.stringify(myForm).replace(/"/g, "").replace(/{/g, "\n\n").replace(/,/g, "\n")
-        alert(datos);
-    //    let t = text.select();
-        navigator.clipboard.writeText(datos)
-   //     navigator.clipboard.writeText(text.select())
-/*
-        editor.select();
-            document.execCommand('copy');
-            editor.blur();
-            editor.style.display = 'none';
-*/
+var bk=nota.value;
+nota.value=datos;
+nota.select();
+  document.execCommand('copy');
+    alert("Informacion copiada en 'Clip Board'\n\n"+datos);
+        nota.value=bk;  
+    
+        nota.blur();
     }
 </script>
 
