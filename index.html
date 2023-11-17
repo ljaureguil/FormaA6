@@ -118,12 +118,14 @@
                 <textarea id="nota" type="text" class="centradas"></textarea>
                  <br>
                 <br> 
+                   <div id="dbts" style="display: none;">
                    <button onclick="sendForm()">Enviar<br>Forma</button>
                 <button onclick="downloadContrato()">Download<br>Contrato/img</button>
                  <button onclick="printF(true)">Imprimir/Pdf<br>Contrato</button>
                  <button onclick="printF(false)">Imprimir Contrato<br>en Blanco</button>    
-                 <button onclick="sendForm(false)" style="width:auto;font-size:small;position:absolute;bottom:2%;right:2%;border-radius: 100px;">Copy</button>                            
+                 <button onclick="sendForm(false)" style="width:auto;font-size:small;position:absolute;top:2%;right:2%;border-radius: 100px;">Copy</button>                            
                 <br>
+             </div>
  
     </div>
     <img id="bkg" src="https://static.wixstatic.com/media/4ee8f5_60381e3f42d7417e896b3b3673506fb8~mv2.jpg/v1/fill/w_463,h_463,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/4ee8f5_60381e3f42d7417e896b3b3673506fb8~mv2.jpg">
@@ -299,7 +301,9 @@
 
      getObf(cl,function(ob){
          myForm=ob;
+           dbts.style.display="block";
           setInfo(ob);
+        
 
          })
      
