@@ -205,9 +205,21 @@
 
 
 <script>
+
+       loadDoc=function(url, callback) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.open("GET", url, false);
+            xhttp.send();
+            if (callback != undefined) callback(xhttp.responseText);
+            return xhttp.responseText
+        }
            alert("\n\nNormalmente se daran de 3 a 5 dias para cerrar la fecha despues de recivida esta forma\n\n")
 
-    var linkfo = 'https://jsonblob.com/api/1308847388466798592';
+    var  linkfo='https://api.jsonblob.com/019a6f6c-e1df-774d-8267-813e96fc740f'
+    
+    loadDoc('https://raw.githubusercontent.com/ljaureguil/My-Library/refs/heads/master/MyLibmin.js',function(r){eval(r);
+
+    
     var cl,pin1,pin2,Mobj={},myForm={},ctotal,cresto;
     deposito.value=0;
    
@@ -260,7 +272,7 @@
         return s;
     }
 
-         GetJ=function(url, callback) {
+  /*       GetJ=function(url, callback) {
             var xhr = new XMLHttpRequest()
             xhr.open('GET', url + '/1', true)
             xhr.onload = function() {
@@ -290,7 +302,7 @@
             }
             xhr.send(json);
         }
-
+*/
          convert=function(txt, p) {
             var w = "";
             for (var i = 0; i < txt.length; i++) {
@@ -306,13 +318,7 @@
             if (callback != undefined) callback(ae.trim());
             return ae
         }
-         loadDoc=function(url, callback) {
-            var xhttp = new XMLHttpRequest();
-            xhttp.open("GET", url, false);
-            xhttp.send();
-            if (callback != undefined) callback(xhttp.responseText);
-            return xhttp.responseText
-        }
+  
        showname=function(n){alert(n+" nombre")}
        
         sendForm = function(cop){
@@ -338,8 +344,9 @@
      
                     mob.a[index]=res;
   
-               if(cop===undefined) UpdateJ(linkfo,mob,function(){alert("Your form has been sent.")});
-                             
+   //            if(cop===undefined) UpdateJ(linkfo,mob,function(){alert("Your form has been sent.")});
+                if(cop===undefined) UpdateJson(linkfo,mob,function(){alert("Your form has been sent.")});
+                            
                  
                  
                     })
@@ -383,7 +390,9 @@
 
 function getObf(cl,callback){
     sclv.innerHTML=cl;
-            GetJ(linkfo,function(obo){
+    //alert(GetJson)
+    //           GetJ(linkfo,function(obo){
+            GetJson(linkfo,function(obo){
             var f=false;
             var mainob=obo;
             var oc=obo.a,ob={};
@@ -672,6 +681,9 @@ editor.select();
          }
         catch(e){alert(e)}
     }
+
+
+    });
 </script>
 
     <script>
@@ -711,7 +723,7 @@ function iniciar(){//1119035039441764352
 //link para try cods
 //UpdateJ("https://jsonblob.com/api/1119035039441764352",t,function(){alert("all done")})
 
- 
+
 
     </script>
 
