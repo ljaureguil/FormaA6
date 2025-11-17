@@ -16,7 +16,7 @@
 
         }
         #bkg{
-       z-index: -2;
+       z-index: 2;
             position: absolute;
             width: 100%;
             top:25%;
@@ -196,14 +196,16 @@
              </div>
  
     </div>
-    <img id="bkg" src="https://i.ibb.co/SxgwcNt/IMG-20230511-WA0002.jpg" border="0">
+    <video id="bkg" src="https://video.wixstatic.com/video/4ee8f5_85c9f1f14c504820a5094a99fd42e50b/480p/mp4/file.mp4" autoplay></video>
+ 
 <div id="deditor" style="position: absolute;top:10%;left: 10%;width: 80%;height: 60%;display: none;z-index: 10;overflow: auto;border-style: solid;">
     <textarea id="editor" style="width: 100%;height: 70%;background-color: cornsilk;"></textarea>
     <button onclick="deditor.style.display='none';">Close</button>
 
 </div>
 
-
+   <button id="vpl" style="position:absolute;top:30%;left:20%;width: 60%;height:40;z-index: 300;" onclick="bkg.play();vpl.style.display='none'">Despues de recibida la forma se daran 3 dias para cerrar la fecha</button>
+   
 <script>
 
        loadDoc=function(url, callback) {
@@ -213,7 +215,7 @@
             if (callback != undefined) callback(xhttp.responseText);
             return xhttp.responseText
         }
-           alert("\n\nNormalmente se daran de 3 a 5 dias para cerrar la fecha despues de recivida esta forma\n\n")
+       //    alert("\n\nNormalmente se daran de 3 a 5 dias para cerrar la fecha despues de recivida esta forma\n\n")
 
     var  linkfo='https://api.jsonblob.com/019a6f6c-e1df-774d-8267-813e96fc740f'
     
