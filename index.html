@@ -20,7 +20,7 @@
             position: absolute;
             width: 100%;
             top:25%;
-            opacity: 0;
+            opacity: 0.3;
      transform-style: preserve-3d;
      transform:opacity 8s;
    //  transform:perspective(6.5cm) scale(3,3) rotateX(85deg);
@@ -31,6 +31,7 @@
   transition: all 2.5s ease-in-out;
   z-index: -5;
         }
+
  
   #entradas {
       color: black;
@@ -196,7 +197,7 @@
              </div>
  
     </div>
-    <video id="bkg" src="https://video.wixstatic.com/video/4ee8f5_85c9f1f14c504820a5094a99fd42e50b/480p/mp4/file.mp4" autoplay></video>
+    <video id="bkg" src="https://video.wixstatic.com/video/4ee8f5_85c9f1f14c504820a5094a99fd42e50b/480p/mp4/file.mp4" autoplay  onloadstart="this.volume=0.5"></video>
  
 <div id="deditor" style="position: absolute;top:10%;left: 10%;width: 80%;height: 60%;display: none;z-index: 10;overflow: auto;border-style: solid;">
     <textarea id="editor" style="width: 100%;height: 70%;background-color: cornsilk;"></textarea>
@@ -226,7 +227,7 @@
     deposito.value=0;
    
     setTimeout(() => {
-        bkg.style.opacity="1";
+        bkg.style.opacity=".4";
       // bkg.style.transform="scale(1.25, 1.25)  rotateX(-0deg)";
       
       //  bkg.style.zIndex="-100";
