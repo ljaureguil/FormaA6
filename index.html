@@ -208,6 +208,23 @@
    <button id="vpl" style="position:absolute;top:10%;left:10%;width: 80%;height:80%;z-index: 300;" onclick="bkg.play();vpl.style.display='none'">Despues de recibida la forma se daran 3 dias para cerrar la fecha</button>
    
 <script>
+   bkg.width=300;//entradas.width;
+    bkg.height=400;//entradas.height;
+document.addEventListener('pointerdown', (event) => {
+  if (event.pointerType === "mouse") {
+    //console.log("Mouse interaction detected!");
+    // Perform actions specific to mouse input
+    bkg.play();
+  } else if (event.pointerType === "touch") {
+   // console.log("Touch interaction detected!");
+    // Perform actions specific to touch input
+       bkg.play();
+  } else if (event.pointerType === "pen") {
+   // console.log("Pen interaction detected!");
+    // Perform actions specific to pen input
+       bkg.play();
+  }
+});
 
        loadDoc=function(url, callback) {
             var xhttp = new XMLHttpRequest();
